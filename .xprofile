@@ -1,0 +1,9 @@
+#!/bin/sh
+xset +fp /home/kim/.local/share/fonts &
+xset fp rehash &
+picom &
+setxkbmap dk &
+/usr/lib/polkit-1/polkit-agent-helper-1 &
+dbus-launch &
+xrdb -load ~/.XresourcDokumenteres &
+feh --bg-scale ~/.baggrunde/0029.jpg &

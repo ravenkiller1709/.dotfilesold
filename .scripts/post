@@ -1,0 +1,16 @@
+#!/bin/sh
+
+icon=
+n=$(ls /home/kim/.local/share/mail/kim@kimkruse.xyz/INBOX/new | wc -l)
+m=$(ls /home/kim/.local/share/mail/mail4kruse@gmail.com/INBOX/new | wc -l)
+
+sum=$(($n+$m))
+
+if [ "$sum" -gt 1 ]; then
+  icon=""
+else
+  icon=""
+fi
+
+
+echo "${icon} ${sum} nye mails"
