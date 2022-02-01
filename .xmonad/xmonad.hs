@@ -1,4 +1,7 @@
 import XMonad
+import qualified XMonad.StackSet as W
+import qualified Data.Map as M
+import XMonad.ManageHook
 import XMonad.Util.EZConfig
 import XMonad.Util.Ungrab
 import XMonad.Hooks.ManageDocks
@@ -12,11 +15,20 @@ import XMonad.Hooks.StatusBar.PP
 import XMonad.Layout.ThreeColumns
 import XMonad.Layout.Magnifier
 import XMonad.Util.Loggers
+import XMonad.Hooks.ManageHelpers
+import XMonad.Util.NamedScratchpad
+import XMonad.Util.ClickableWorkspaces
+
+myManageHook :: ManageHook
+myManageHook = composeAll
+    [ className =? "Gimp" --> doFloat
+    , isDialog            --> doFloat
+    ]
 
 myXmobarPP :: PP
 myXmobarPP = def
     { ppSep             = magenta " . "
-    , ppTitleSanitize    = xmobarStrip
+    , ppTitleSanitize   = xmobarStrip
     , ppCurrent         = wrap " " "" . xmobarBorder "Top" "#8be9fd" 2
     , ppHidden          = white . wrap " " ""
     , ppHiddenNoWindows = lowWhite . wrap " " ""
@@ -53,16 +65,28 @@ main = xmonad
 myConfig = def
     { terminal    = myTerminal
     , modMask     = myModMask
-    , workspaces = myWorkspaces
+    , workspaces  = myWorkspaces
     , borderWidth = myBorderWidth
     , focusedBorderColor = myBorderColor
     , normalBorderColor = myNormalColor
-    , layoutHook= myLayout
+    , layoutHook = myLayout
+    , manageHook = myManageHook
     }
     `additionalKeysP`
-    [ ("M-S-z", spawn "xscreensaver-command -lock")
-    , ("M-S-=", unGrab *> spawn "scrot -s"        )
+    [ ("M-S-z", spawn "betterlockscreen -l")
+    , ("M-S-<Left>", unGrab *> spawn "scrot -s"        )
     , ("M-w"  , spawn "firefox"                   )
+    , ("M-a"  , spawn "alacritty"                   )
+    , ("M-m"  , spawn "alacritty -e neomutt")
+    , ("M-x"  , spawn "/home/kim/.local/bin/sysact"                   )
+    , ("M-S-t", namedScratchpadAction myScratchPads "terminal")
+    , ("M-S-m", namedScratchpadAction myScratchPads "musik")
+    , ("M-C-c", namedScratchpadAction myScratchPads "lommeregner")
+    , ("<XF86AudioRaiseVolume>"  , spawn "amixer -q sset Master 5%+") 
+    , ("<XF86AudioLowerVolume>"  , spawn "amixer -q sset Master 5%-") 
+    , ("<XF86AudioMute>"         , spawn "amixer set Master toggle") 
+    , ("<XF86MonBrightnessUp>"   , spawn "xbacklight -inc 5%") 
+    , ("<XF86MonBrightnessDown>" , spawn "xbacklight -dec 5%") 
     ]
 
 myTerminal    = "st"
@@ -78,3 +102,35 @@ myLayout      = tiled ||| Mirror tiled ||| Full ||| threeCol
     nmaster   = 1        -- Default number of windows in the master pane
     ratio     = 1/2      -- Default proportion of screen occupied by master pane
     delta     = 3/100    -- Percent of screen to increment by when resizing panes
+
+myScratchPads :: [NamedScratchpad]
+myScratchPads = [ NS "terminal" spawnTerm findTerm manageTerm
+                , NS "musik" spawnNcmpcpp findNcmpcpp manageNcmpcpp
+                , NS "lommeregner" spawnCalc findCalc manageCalc
+                ]
+  where
+    spawnTerm  = myTerminal ++ " -t scratchpad"
+    findTerm   = title =? "scratchpad"
+    manageTerm = customFloating $ W.RationalRect l t w h
+               where
+                 h = 0.9
+                 w = 0.9
+                 t = 0.95 -h
+                 l = 0.95 -w
+    spawnNcmpcpp  =  "urxvt -e ncmpcpp"
+    findNcmpcpp   = className =? "URxvt"
+    manageNcmpcpp = customFloating $ W.RationalRect l t w h
+               where
+                 h = 0.9
+                 w = 0.9
+                 t = 0.95 -h
+                 l = 0.95 -w
+    spawnCalc  = "qalculate-gtk"
+    findCalc   = className =? "Qalculate-gtk"
+    manageCalc = customFloating $ W.RationalRect l t w h
+               where
+                 h = 0.5
+                 w = 0.4
+                 t = 0.75 -h
+                 l = 0.70 -w
+

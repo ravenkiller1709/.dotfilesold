@@ -1,17 +1,19 @@
 Config { 
 
    -- appearance
-     font =         "xft:Bitstream Vera Sans Mono:size=12:bold:antialias=true"
+     font =         "xft:Hack Nerd Font:size=14:bold:antialias=true"
+   , additionalFonts = ["xft:Hack Nerd Font:pixelsize=12:antialias=true"]
    , bgColor =      "#282C34"
    , fgColor =      "#BBC2CF"
    , position =     Top
    , border =       BottomB
    , borderColor =  "#646464"
+   , iconRoot = ".xmonad/"
 
    -- layout
    , sepChar =  "%"   -- delineator between plugin names and straight text
    , alignSep = "}{"  -- separator between left-right alignment
-   , template = "%XMonadLog% }{ %battery% | %dynnetwork% | %RJTT% | %date% "
+   , template = "<icon=haskell_20.xpm/> | %UnsafeXMonadLog% }{ %mpd% | %bat% | %post% | %weather% | %date% "
 
    -- general behavior
    , lowerOnStart =     True    -- send to bottom of window stack on start
@@ -35,11 +37,21 @@ Config {
    --   The --template option controls how the plugin is displayed. Text
    --   color can be set by enclosing in <fc></fc> tags. For more details
    --   see http://projects.haskell.org/xmobar/#system-monitor-plugins.
-   , commands = 
 
-        -- weather monitor
-        [ Run Weather "RJTT" [ "--template", "<skyCondition> | <fc=#4682B4><tempC></fc>°C | <fc=#4682B4><rh></fc>% | <fc=#4682B4><pressure></fc>hPa"
-                             ] 36000
+    -- weather monitor
+    , commands = [ Run Weather "EKCH"
+                            [ "--template", "<tempC>°C | <rh>% | <pressure>hPa"
+                            , "-L", "0"
+                            , "-H", "25"
+                            , "--low"   , "lightblue"
+                            , "--normal", "#f8f8f2"
+                            , "--high"  , "red"
+                            ] 36000
+        , Run Com ".local/bin/weather-xmobar.py" [] "weather" 36000
+        , Run Com ".scripts/post" [] "post" 120
+        , Run Com ".scripts/batteri" [] "bat" 120
+        , Run Com ".scripts/mpd" [] "mpd" 10
+        , Run Com ".scripts/player.py" [] "player" 360
 
         -- network activity monitor (dynamic interface resolution)
         , Run DynNetwork     [ "--template" , "<dev>: <tx>kB/s|<rx>kB/s"
@@ -96,10 +108,10 @@ Config {
 
         -- time and date indicator 
         --   (%F = y-m-d date, %a = day of week, %T = h:m:s time)
-        , Run Date           "<fc=#ABABAB>%F (%a) %T</fc>" "date" 10
+        , Run Date           "%d/%m <fc=#ae95c7> </fc> %H:%M" "date" 10
 
         -- keyboard layout indicator
         
-        , Run XMonadLog
+        , Run UnsafeXMonadLog
         ]
        } 
