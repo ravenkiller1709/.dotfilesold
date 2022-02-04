@@ -22,6 +22,7 @@ import XMonad.Util.ClickableWorkspaces
 myManageHook :: ManageHook
 myManageHook = composeAll
     [ className =? "Gimp" --> doFloat
+    , className =? "st-256color" --> doFloat
     , isDialog            --> doFloat
     ]
 
@@ -75,9 +76,11 @@ myConfig = def
     `additionalKeysP`
     [ ("M-S-z", spawn "betterlockscreen -l")
     , ("M-S-<Left>", unGrab *> spawn "scrot -s"        )
-    , ("M-w"  , spawn "firefox"                   )
+    , ("M-w"  , spawn "brave-browser-nightly"                   )
     , ("M-a"  , spawn "alacritty"                   )
     , ("M-m"  , spawn "alacritty -e neomutt")
+    , ("M-n"  , spawn "st -g 70x30+600-200 -e ~/.scripts/notetaker -t notetaker_window")
+    , ("M-S-n", spawn "~/.scripts/mostRecentNote")
     , ("M-x"  , spawn "/home/kim/.local/bin/sysact"                   )
     , ("M-S-t", namedScratchpadAction myScratchPads "terminal")
     , ("M-S-m", namedScratchpadAction myScratchPads "musik")
@@ -89,7 +92,7 @@ myConfig = def
     , ("<XF86MonBrightnessDown>" , spawn "xbacklight -dec 5%") 
     ]
 
-myTerminal    = "st"
+myTerminal    = "alacritty"
 myModMask     = mod4Mask -- Win key or Super_L
 myBorderWidth = 3
 myBorderColor = "#ffffff"

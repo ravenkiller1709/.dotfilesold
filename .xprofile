@@ -7,5 +7,6 @@ xsetroot -cursor_name left_ptr &
 xfce4-power-manager &
 /usr/lib/polkit-1/polkit-agent-helper-1 &
 dbus-launch &
-xrdb -load ~/.XresourcDokumenteres &
-feh --bg-scale ~/.baggrunde/0056.jpg &
+xrdb -load ~/.Xresources &
+dropbox &
+feh --bg-scale ~/.baggrunde/0116.jpg &

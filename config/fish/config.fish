@@ -18,5 +18,5 @@ if status is-interactive
     alias sz='source ~/.config/fish/config.fish'
     alias nm=neomutt
     
-    colorscript -r
+    /usr/bin/colorscript -r
 end

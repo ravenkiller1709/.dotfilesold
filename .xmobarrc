@@ -46,7 +46,7 @@ Config {
                             , "--low"   , "lightblue"
                             , "--normal", "#f8f8f2"
                             , "--high"  , "red"
-                            ] 36000
+                            ] 360
         , Run Com ".local/bin/weather-xmobar.py" [] "weather" 36000
         , Run Com ".scripts/post" [] "post" 120
         , Run Com ".scripts/batteri" [] "bat" 120
