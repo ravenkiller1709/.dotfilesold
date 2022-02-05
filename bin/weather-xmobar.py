@@ -10,7 +10,7 @@ import datetime
 # color map
 # color can be defined as a word or HEX code #RGB
 weather_colors = {
-    "weather_day": "#FFFF00",
+    "weather_day": "#F0C674",
     "weather_night": "#1E90FF",
     "unknown": "white",
     "realTemp": "#8c9440",
@@ -27,7 +27,7 @@ wind_colors = {
     11: "#7BCDBF",
     19: "#04E100",
     28: "#66FE3A",
-    38: "#CAFF33",
+    38: "#81A2BE",
     49: "#E2FE97",
     61: "#FEFE0A",
     74: "#F9DD56",
@@ -134,7 +134,7 @@ weather_icons_day = {
     # Sunny
     "113": "  ",
     # Partly Cloudy
-    "116": " 杖",
+    "116": " 杖 ",
     # Cloudy
     "119": " 摒",
     # Very Cloudy

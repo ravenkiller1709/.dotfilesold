@@ -19,6 +19,8 @@ import XMonad.Hooks.ManageHelpers
 import XMonad.Util.NamedScratchpad
 import XMonad.Util.ClickableWorkspaces
 import XMonad.Layout.Spiral
+import XMonad.Layout.Grid
+import XMonad.Layout.MultiColumns
 
 myManageHook :: ManageHook
 myManageHook = composeAll
@@ -99,7 +101,7 @@ myBorderWidth = 3
 myBorderColor = "#ffffff"
 myNormalColor = "#696969"
 myWorkspaces  = ["term","www","cod","gfx","vid","mus"] 
-myLayout      = tiled ||| Mirror tiled ||| Full ||| threeCol ||| spiral (6/7)
+myLayout      = tiled ||| Mirror tiled ||| Full ||| threeCol ||| spiral (6/7) ||| Grid ||| multiCol [1] 1 0.01 (-0.5)
   where
     threeCol  = magnifiercz' 1.3 $ ThreeColMid nmaster delta ratio
     tiled     = Tall nmaster delta ratio
