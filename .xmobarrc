@@ -1,7 +1,7 @@
 Config { 
 
    -- appearance
-     font =         "xft:Hack Nerd Font:size=14:bold:antialias=true"
+     font =         "xft:Hack Nerd Font:size=10:bold:antialias=true"
    , additionalFonts = ["xft:Hack Nerd Font:pixelsize=12:antialias=true"]
    , bgColor =      "#282C34"
    , fgColor =      "#BBC2CF"
@@ -108,7 +108,7 @@ Config {
 
         -- time and date indicator 
         --   (%F = y-m-d date, %a = day of week, %T = h:m:s time)
-        , Run Date           "%d/%m <fc=#ae95c7> </fc> %H:%M" "date" 10
+        , Run Date           "%d/%m <fc=#cc6666> </fc> %H:%M" "date" 10
 
         -- keyboard layout indicator
         

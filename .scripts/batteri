@@ -7,11 +7,11 @@ sum=$(($n+$m))
 ans=$(($sum / 2))
 
 if [ "$ans" -gt 97 ]; then
-   icon="<fc=#8abeb7>   </fc>"
+   icon="<fc=#B5BD68>   </fc>"
 elif [ "$ans" -gt 75 ]; then
-    icon="<fc=#8abeb7>   </fc>"
+    icon="<fc=#B5BD68>   </fc>"
 elif [ "$ans" -gt 50 ]; then
-    icon="<fc=#b5bd68>   </fc>"
+    icon="<fc=#F0C674>   </fc>"
 elif [ "$ans" -gt 25 ]; then
     icon="<fc=#de935f>   </fc>"
 elif [ "$ans" -gt 10 ]; then

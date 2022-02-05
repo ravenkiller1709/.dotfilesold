@@ -11,7 +11,7 @@ import datetime
 # color can be defined as a word or HEX code #RGB
 weather_colors = {
     "weather_day": "#F0C674",
-    "weather_night": "#1E90FF",
+    "weather_night": "#B294BB",
     "unknown": "white",
     "realTemp": "#8c9440",
     "feelsLikeTemp": "#8c9440",
