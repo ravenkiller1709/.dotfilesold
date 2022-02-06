@@ -13,7 +13,7 @@ Config {
    -- layout
    , sepChar =  "%"   -- delineator between plugin names and straight text
    , alignSep = "}{"  -- separator between left-right alignment
-   , template = "<icon=haskell_20.xpm/> | %UnsafeXMonadLog% }{ %mpris2% | %mpd% | %bat% | %post% | %weather% | %date% "
+   , template = "<icon=haskell_20.xpm/> | %UnsafeXMonadLog% }{ %mpris2% | %mpd% | %bat% | %post% | %EKCH% | %date% "
 
    -- general behavior
    , lowerOnStart =     True    -- send to bottom of window stack on start
@@ -39,14 +39,31 @@ Config {
    --   see http://projects.haskell.org/xmobar/#system-monitor-plugins.
 
     -- weather monitor
-    , commands = [ Run Weather "EKCH"
-                            [ "--template", "<tempC>°C | <rh>% | <pressure>hPa"
-                            , "-L", "0"
-                            , "-H", "25"
-                            , "--low"   , "lightblue"
-                            , "--normal", "#f8f8f2"
-                            , "--high"  , "red"
-                            ] 360
+    , commands = [ 
+          -- Run Weather "EKCH"
+          --                  [ "--template", "<fc=#8ABEB7></fc> <tempC>°C <fc=#B294BB>  </fc> <windMs> ms <fc=#81A2BE>(<skyCondition>)</fc>"
+          --                  , "-L", "0"
+          --                  , "-H", "25"
+          --                  , "--low"   , "lightblue"
+          --                  , "--normal", "#f8f8f2"
+          --                  , "--high"  , "red"
+          --                  ] 360
+          Run WeatherX "EKCH"
+          [ ("clear", "<fc=#DE935F> </fc>")
+          , ("sunny", "<fc=#DE935F> </fc>")
+          , ("mostly clear", "<fc=#DE935F> </fc>")
+          , ("mostly sunny", "<fc=#DE935F> </fc>")
+          , ("partly sunny", "<fc=#DE935F>⛅ </fc>")
+          , ("fair", "<fc=#DE935F> </fc>")
+          , ("cloudy","<fc=#B294BB> </fc>")
+          , ("overcast","<fc=#B294BB> </fc>") 
+          , ("partly cloudy", "<fc=#81A2BE>⛅ </fc>")
+          , ("mostly cloudy", "<fc=#81A2BE> </fc>")
+          , ("considerable cloudiness", "<fc=#81A2BE> </fc>")]
+          ["-t", "<fn=2><skyConditionS></fn> <tempC>° <fc=#B294BB><rh></fc>%<fc=#8ABEB7>  </fc> <windMs>ms (<fc=#B5BD68><hour></fc>)"
+          , "-L","10", "-H", "25", "--normal", "black"
+          , "--high", "lightgoldenrod4", "--low", "darkseagreen4"]
+          18000
         , Run Com ".local/bin/weather-xmobar.py" [] "weather" 36000
         , Run Com ".scripts/post" [] "post" 120
         , Run Com ".scripts/batteri" [] "bat" 120
@@ -54,7 +71,7 @@ Config {
         , Run Com ".scripts/player.py" [] "player" 360
 
         , Run MPD            [ "-t",
-                               "<fc=#81A2BE> </fc> <artist> - <composer> <title> (<album>) <track>/<plength> <statei> [<flags>]",
+                               "<fc=#81A2BE> </fc> <artist> -<composer> <title>",
                                "--", "-P", ">>", "-Z", "|", "-S", "><"] 10
 
         , Run Mpris2 "spotify" ["-t", "<fc=#1ED760>  </fc> <artist> - [<composer>] <title>"] 10
