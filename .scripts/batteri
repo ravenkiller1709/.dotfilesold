@@ -7,7 +7,7 @@ sum=$(($n+$m))
 ans=$(($sum / 2))
 
 if [ "$ans" -gt 97 ]; then
-   icon="<fc=#B5BD68>   </fc>"
+   icon="<fc=#4B905E>   </fc>"
 elif [ "$ans" -gt 75 ]; then
     icon="<fc=#B5BD68>   </fc>"
 elif [ "$ans" -gt 50 ]; then
