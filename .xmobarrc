@@ -13,7 +13,7 @@ Config {
    -- layout
    , sepChar =  "%"   -- delineator between plugin names and straight text
    , alignSep = "}{"  -- separator between left-right alignment
-   , template = "<icon=haskell_20.xpm/> | %UnsafeXMonadLog% }{ %mpris2% | %mpd% | %bat% | %post% | %EKCH% | %date% "
+   , template = "<icon=haskell_20.xpm/> | %UnsafeXMonadLog% }{ %dynnetwork% | %mpris2% | %mpd% | %battery% | %post% | %EKCH% | %date% "
 
    -- general behavior
    , lowerOnStart =     True    -- send to bottom of window stack on start
@@ -70,27 +70,28 @@ Config {
         , Run Com ".scripts/mpd" [] "mpd2" 10
         , Run Com ".scripts/player.py" [] "player" 360
 
-        , Run MPD            [ "-t",
-                               "<fc=#81A2BE> </fc> <artist> -<composer> <title>",
-                               "--", "-P", ">>", "-Z", "|", "-S", "><"] 10
+        , Run MPD              [ "-t",
+                                 "<fc=#81A2BE> </fc> <artist><composer><title>",
+                                 "--", "-P", ">>", "-Z", "|", "-S", "><"] 10
 
-        , Run Mpris2 "spotify" ["-t", "<fc=#1ED760>  </fc> <artist> - [<composer>] <title>"] 10
-    -- network activity monitor (dynamic interface resolution)
-        , Run DynNetwork     [ "--template" , "<dev>: <tx>kB/s|<rx>kB/s"
-                             , "--Low"      , "1000"       -- units: B/s
-                             , "--High"     , "5000"       -- units: B/s
-                             , "--low"      , "darkgreen"
-                             , "--normal"   , "darkorange"
-                             , "--high"     , "darkred"
-                             ] 10
+        , Run Mpris2 "spotify" [  "-t", "<fc=#1ED760>  </fc> <artist> - [<composer>] <title>", "-x","<fc=#1ED760> </fc>" 
+                               ] 10
+        -- network activity monitor (dynamic interface resolution)
+        , Run DynNetwork       [ "--template" , "<fc=#F0C674>   </fc><dev>: <tx>kB/s|<rx>kB/s"
+                                , "--Low"      , "1000"       -- units: B/s
+                                , "--High"     , "5000"       -- units: B/s
+                                , "--low"      , "#5E8D87"
+                                , "--normal"   , "#DE935F"
+                                , "--high"     , "#A54242"
+                               ] 10
 
         -- cpu activity monitor
         , Run MultiCpu       [ "--template" , "Cpu: <total0>%|<total1>%"
                              , "--Low"      , "50"         -- units: %
                              , "--High"     , "85"         -- units: %
-                             , "--low"      , "darkgreen"
-                             , "--normal"   , "darkorange"
-                             , "--high"     , "darkred"
+                             , "--low"      , "#5E8D87"
+                             , "--normal"   , "#DE935F"
+                             , "--high"     , "#A54242"
                              ] 10
 
         -- cpu core temperature monitor
@@ -112,20 +113,22 @@ Config {
                              ] 10
 
         -- battery monitor
-        , Run Battery        [ "--template" , "Batt: <acstatus>"
+        , Run BatteryP    ["BAT0", "BAT1"]
+                             [ "--template", "<fc=#8ABEB7>  </fc><acstatus>"
+                     
                              , "--Low"      , "10"        -- units: %
                              , "--High"     , "80"        -- units: %
-                             , "--low"      , "darkred"
-                             , "--normal"   , "darkorange"
-                             , "--high"     , "darkgreen"
+                             , "--low"      , "#cc6666"
+                             , "--normal"   , "#8C9440"
+                             , "--high"     , "#5E8D87"
 
                              , "--" -- battery specific options
-                                       -- discharging status
-                                       , "-o"	, "<left>% (<timeleft>)"
-                                       -- AC "on" status
-                                       , "-O"	, "<fc=#dAA520>Charging</fc>"
-                                       -- charged status
-                                       , "-i"	, "<fc=#006000>Charged</fc>"
+                                -- discharging status
+                              , "-o"	, "<left>% (<timeleft>)"
+                                -- AC "on" status
+                              , "-O"	, "<fc=#944C50>  </fc>"
+                                -- charged status
+                              , "-i"	, "<fc=#60754D>  </fc>"
                              ] 50
 
         -- time and date indicator 
