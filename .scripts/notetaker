@@ -1,6 +1,6 @@
 #!/bin/sh
 
-noteFilename="$HOME/Dropbox/noter/src/note-$(date +%Y-%m-%d).md"
+noteFilename="$HOME/Dokumenter/notes/src/note-$(date +%Y-%m-%d).md"
 
 if [ ! -f $noteFilename ]; then
   echo "# Notes for $(date +%Y-%m-%d)" > $noteFilename
